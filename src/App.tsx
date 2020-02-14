@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
+import RepositoryInfo from "./RepositoryInfo";
 import getRepositories from "./getRepositories";
+import { IRepository } from "./types";
 
-interface Props {}
-interface Repository {
-  id: number;
-  name: string;
-  url: string;
-}
-
-function App(props: Props) {
+function App() {
   const [repositories, setRepositories] = useState([]);
 
   useEffect(() => {
@@ -20,18 +15,11 @@ function App(props: Props) {
   return (
     <div>
       <h1>Github Issues</h1>
-      <ul>
-        {repositories.map((repository: Repository) => {
-          return (
-            <li>
-              <div>
-                <b>{repository.name}</b>
-                {repository.url}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      {repositories.map((repository: IRepository) => {
+        return (
+          <RepositoryInfo {...{ repository }} />
+        );
+      })}
     </div>
   );
 }
