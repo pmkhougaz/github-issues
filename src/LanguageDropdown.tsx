@@ -3,16 +3,17 @@ import React, { useState } from "react";
 interface Props {
   options: string[];
   onSelect: any;
+  selected: string;
 }
 
 function LanguageDropdown(props: Props) {
   const [visible, toggleVisibility] = useState(false);
-  const { options, onSelect } = props;
+  const { options, onSelect, selected } = props;
 
   return (
     <div>
       <button className="block" onClick={() => toggleVisibility(!visible)}>
-        Select Language
+        Select Language: <b>{selected}</b>
       </button>
       {visible && (
         <div className="w-48 bg-gray-100 rounded-lg py-2 shadow my-3">

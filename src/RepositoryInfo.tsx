@@ -9,7 +9,7 @@ function RepositoryInfo(props: Props) {
   const { repository } = props;
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg" key={repository.id}>
+    <div className="w-1/2 text-center rounded overflow-hidden shadow-lg flex-grow hover:bg-gray-200">
       <a href={repository.html_url}>
         <div className="px-6 py-4">
           <div className="font-semibold text-l mb-2">

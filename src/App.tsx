@@ -7,12 +7,15 @@ import { IRepository } from "./types";
 function App() {
   const [repositories, setRepositories] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("Java");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     Promise.all([getRepositories(selectedLanguage)]).then(([results]) => {
       setRepositories(results.items);
+      setLoading(false);
     });
-  }, [ selectedLanguage ]);
+  }, [selectedLanguage]);
 
   return (
     <div>
@@ -26,19 +29,24 @@ function App() {
           <div className="w-1/8 text-right">
             <div className="p-3">
               <LanguageDropdown
-                {...{
-                  options: ["Perl", "Python", "Ruby", "Javascript", "Java"],
-                  onSelect: (option: string) => setSelectedLanguage(option),
-                }}
+                options={["Perl", "Python", "Ruby", "Javascript", "Java"]}
+                onSelect={(option: string) => setSelectedLanguage(option)}
+                selected={selectedLanguage}
               />
             </div>
           </div>
         </div>
       </div>
 
-      {repositories.map((repository: IRepository) => {
-        return <RepositoryInfo {...{ repository }} />;
-      })}
+      <div className="flex flex-col items-center">
+        {loading ? (
+          <div className="spin" />
+        ) : (
+          repositories.map((repository: IRepository) => {
+            return <RepositoryInfo key={repository.id} repository={repository} />;
+          })
+        )}
+      </div>
     </div>
   );
 }
